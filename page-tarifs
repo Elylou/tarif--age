@@ -1,0 +1,233 @@
+<?php
+/**
+* Template Name: tarif
+* @subpackage LearnX
+* @since LearnX 1.0
+*/ 
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
+get_header(); ?>	
+
+
+
+
+<section id="cta" class="jumbotron jumbotron-fluid cover mt-minus-1" 
+		<?php if(get_field('tarif_image')) :
+			$image = wp_get_attachment_image_src(get_field('tarif_image'), 'full'); ?>
+			style="background-image:url('<?php echo $image[0]; ?>');"
+		<?php endif; ?>>
+		<div class="container">
+
+			<?php if (get_field('tarif_titre')): ?>
+				<div class="row my-5 justify-content-center">
+					<div class="col">
+						<h1 class="text-center display-2 text-white font-weight-bold text-shadow mb-4 text-break">
+							<?php the_field('tarif_titre'); ?>
+						</h1>
+					</div>
+				</div>
+			<?php endif; ?>
+
+
+			<?php if( have_rows('offres') ): ?>
+
+				<div class="row my-5 justify-content-center">
+					<div class="col-10">
+						<div class="row align-items-end">
+							<?php $count = 0;?>
+							<?php while ( have_rows('offres') ) : the_row(); ?>
+
+								<?php if ($count > 0 && (($count % 2) != 0)) : ?>
+									<div class="col-md-2">
+										<h2 class="text-center text-white">&</h2>
+									</div>
+
+								<?php endif; ?>
+
+								<div class="col text-center">
+									<h4 class="text-white mb-4">
+										<?php the_sub_field('tarif_text'); ?>
+									</h4>
+									<a class="btn btn-outline-dark btn-lg gradient rounded-pill fixed-width" 
+										href="<?php get_sub_field('tarif_url'); ?>" role="button">
+										<h3 class="text-uppercase font-weight-bold m-0">
+											<?php the_sub_field('tarif_tarif'); ?>
+										</h3>
+									</a>
+								</div>
+
+								<?php $count++; ?>
+							<?php endwhile; ?>
+
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
+
+
+		</div>
+    </section>
+    <!--
+    <?php if( have_rows('content_tarif') ): ?>
+		<?php while ( have_rows('content_tarif') ) : the_row(); ?>
+			
+			<?php //content_part_template title title_color text text_2 image image_2 ?>
+			<!--fullscreen large small left double -->
+			<?php $template_part = get_sub_field('type_part_tarif_template'); ?>
+			
+			<?php $image = get_sub_field('image'); ?>
+			
+			<?php if( $template_part == 'large' || 
+				$template_part == 'small' ) : ?>
+				<section class="background-<?php the_sub_field('background_color'); ?>">
+					<div class="container my-5">
+						<div class="row justify-content-center">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col">
+										<h1 class="display-4 text-center mb-4 text-break tc text-<?php the_sub_field('title_color'); ?>">
+											<?php the_sub_field('title_tarifs'); ?>
+										</h1>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col">
+										<h4 class="mb-4">
+											<?php the_sub_field('text_tarifs'); ?>											
+										</h4>
+									</div>
+								</div>
+								<div class="row justify-content-center">
+									<div class="col<?php if( $template_part == 'small' ) echo '-md-5'; ?>">
+										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"  class="img-fluid"/>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr class="gradient <?php the_sub_field('gradient_color'); ?>">
+				</section>
+				<!-- CONTENT IMAGE LARGE CENTER -->
+
+
+			<?php elseif ( $template_part == 'double' ) : ?>
+				<!-- CONTENT IMAGE DOUBLE -->
+				<?php $image_2 = get_sub_field('image_tarifs_02'); ?>
+				<section class="background-<?php the_sub_field('background_color'); ?>">
+					<div class="container space">
+						<div class="row justify-content-center">
+							<div class="col-md-10">
+								<div class="row">
+									<div class="col">
+										<h1 class="display-4 text-center mb-4 text-break  text-<?php the_sub_field('title_color'); ?>">
+											<?php the_sub_field('title_tarifs'); ?>
+										</h1>
+									</div>
+								</div>
+
+								<!-- VERSION IMAGE-FLUID -->
+								<div class="row d-flex align-items-center">
+									<div class="col-md-6">
+										<h4><?php the_sub_field('text_tarifs'); ?></h4>
+									</div>
+
+									<div class="col-md-6">
+										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"  class="img-fluid"/>
+									</div>
+								</div>
+
+								<div class="row d-flex align-items-center">
+									<div class="col-md-6 float-md-left">
+										<img src="<?php echo $image_2['url']; ?>" alt="<?php echo $image_2['alt'] ?>"  class="img-fluid"/>
+									</div>
+									<div class="col-md-6 d-flex align-items-center">
+										<h4><?php the_sub_field('text_tarifs_02'); ?></h4>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr class="gradient <?php the_sub_field('gradient_color'); ?>">
+				</section>
+				<!-- CONTENT IMAGE DOUBLE -->
+
+			<?php elseif ( $template_part == 'fullscreen' ) : ?>
+				<!-- CONTENT IMAGE FULLSCREEN -->
+				<section class="jumbotron jumbotron-fluid cover mt-minus-1 
+					style="background-image:url("<?php echo $image['url'];?>");">
+					<div class="container py-md-5">
+						<div class="row my-5 justify-content-center">
+							<div class="col">
+								<h1 class="text-center display-2 font-weight-bold text-shadow text-break text-<?php the_sub_field('color_title_fonct'); ?> mb-4">
+									<?php the_sub_field('title_tarifs'); ?>
+								</h1>
+								<h3 class="text-center text-white mb-4">
+									<?php the_sub_field('text_tarifs'); ?>		
+								</h3>
+							</div>
+						</div>
+					</div>
+				</section>
+				<!-- CONTENT IMAGE FULLSCREEN -->
+
+			<?php elseif ( $template_part == 'left' ) : ?>
+				<!-- CONTENT IMAGE LEFT -->
+			<section class="background-<?php the_sub_field('background_color'); ?>">
+					<div class="container space">
+						<div class="row justify-content-center">
+							<div class="col-md-10">
+								<div class="row d-flex">
+									<div class="col-md-6">
+										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"  class="img-fluid"/>	
+									</div>
+									<div class="col-md-6">
+										<h1 class="display-4 mb-4 text-break text-<?php the_sub_field('title_color'); ?>">
+											<?php the_sub_field('title_tarifs'); ?>
+										</h1>
+										<h4 class="mb-4">
+											<?php the_sub_field('text_tarifs'); ?>
+										</h4>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<hr class="gradient <?php the_sub_field('gradient_color'); ?>">
+				</section>
+				<!-- CONTENT IMAGE LEFT -->
+				
+			<?php elseif ( $template_part == 'right' ) : ?>
+				<!-- CONTENT IMAGE right -->
+				<section class="background-<?php the_sub_field('background_color'); ?>">
+					<div class="container space">
+						<div class="row justify-content-center">
+							<div class="col-md-10">
+								<div class="row d-flex">
+								<div class="col-md-6">
+										<h1 class="display-4  mb-4 text-break text-<?php the_sub_field('title_color'); ?>">
+											<?php the_sub_field('title_tarifs'); ?>
+										</h1>
+										<h4 class="mb-4">
+											<?php the_sub_field('text_tarifs'); ?>
+										</h4>
+									</div>
+									<div class="col-md-6">
+										<img src="<?php echo $image['url']; ?>" alt="<?php echo $image['alt'] ?>"  class="img-fluid"/>	
+									</div>
+								
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<hr class="gradient <?php the_sub_field('gradient_color'); ?>">
+				</section>
+				<!-- CONTENT IMAGE right -->
+			<?php endif; ?>
+	
+		<?php endwhile; ?>
+	<?php endif; ?>
+	<?php get_footer(); ?>

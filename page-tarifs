@@ -155,8 +155,8 @@ get_header(); ?>
 
 			<?php elseif ( $template_part == 'fullscreen' ) : ?>
 				<!-- CONTENT IMAGE FULLSCREEN -->
-				<section class="jumbotron jumbotron-fluid cover mt-minus-1 
-					style="background-image:url("<?php echo $image['url'];?>");">
+				<section class="jumbotron jumbotron-fluid cover mt-minus-1" 
+					style="background-image:url('<?php echo $image['url']; ?>');">
 					<div class="container py-md-5">
 						<div class="row my-5 justify-content-center">
 							<div class="col">
